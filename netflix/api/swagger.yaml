@@ -1,0 +1,337 @@
+---
+swagger: "2.0"
+info:
+  description: "netflix"
+  version: "1.0.0"
+  title: "Netflix"
+host: "virtserver.swaggerhub.com"
+basePath: "/mdubuche27/Netflix/1.0.0"
+schemes:
+- "https"
+paths:
+  /movie:
+    post:
+      summary: "Add movie"
+      operationId: "addMovie"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/movie"
+      responses:
+        "200":
+          description: "successful operation"
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "Default"
+  /movie/{movieId}:
+    get:
+      summary: "get movie"
+      operationId: "getMovie"
+      parameters:
+      - name: "movieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Invalid input"
+      x-swagger-router-controller: "Default"
+    delete:
+      summary: "Add movie"
+      operationId: "RemoveMovie"
+      parameters:
+      - name: "movieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Invalid input"
+      x-swagger-router-controller: "Default"
+    patch:
+      summary: "update a movie by Id"
+      operationId: "updateMovie"
+      parameters:
+      - name: "movieId"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "movie"
+        required: true
+        schema:
+          $ref: "#/definitions/movie"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Invalid url"
+      x-swagger-router-controller: "Default"
+  /movies:
+    get:
+      summary: "Returns movies"
+      operationId: "getMovies"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/movie"
+        "404":
+          description: "movies not found"
+      x-swagger-router-controller: "Default"
+  /movies/{categorie}:
+    get:
+      summary: "Returns movies"
+      operationId: "getMoviesByCat"
+      parameters:
+      - name: "categorie"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/movie"
+      x-swagger-router-controller: "Default"
+  /serie:
+    post:
+      summary: "Add serie"
+      operationId: "addSerie"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/serie"
+      responses:
+        "200":
+          description: "successful operation"
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "Default"
+  /serie/{serieId}:
+    get:
+      summary: "get serie"
+      operationId: "getSerie"
+      parameters:
+      - name: "serieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Invalid input"
+      x-swagger-router-controller: "Default"
+    delete:
+      summary: "remove serie"
+      operationId: "RemoveSerie"
+      parameters:
+      - name: "serieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Invalid input"
+      x-swagger-router-controller: "Default"
+    patch:
+      summary: "update a serie by Id"
+      operationId: "updateSerie"
+      parameters:
+      - name: "serieId"
+        in: "path"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "serie"
+        required: true
+        schema:
+          $ref: "#/definitions/serie"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Invalid url"
+      x-swagger-router-controller: "Default"
+  /series:
+    get:
+      summary: "Returns series"
+      operationId: "getSeries"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/serie"
+        "404":
+          description: "series not found"
+      x-swagger-router-controller: "Default"
+  /series/{categorie}:
+    get:
+      summary: "Returns series"
+      operationId: "getSeriesByCat"
+      parameters:
+      - name: "categorie"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/serie"
+      x-swagger-router-controller: "Default"
+definitions:
+  movie:
+    type: "object"
+    required:
+    - "country"
+    - "duree"
+    - "titre"
+    - "url"
+    properties:
+      titre:
+        type: "string"
+      url:
+        type: "string"
+      categories:
+        type: "array"
+        items:
+          type: "string"
+      duree:
+        type: "integer"
+      country:
+        type: "string"
+      posters:
+        type: "array"
+        items:
+          $ref: "#/definitions/poster"
+    xml:
+      name: "movie"
+    example:
+      titre: "Dicator"
+      url: "https://dictator.fr"
+      categories:
+      - "humour"
+      - "politique"
+      duree: 0
+      country: "france"
+  serie:
+    type: "object"
+    required:
+    - "country"
+    - "titre"
+    properties:
+      titre:
+        type: "string"
+      country:
+        type: "string"
+      categories:
+        type: "array"
+        items:
+          type: "string"
+      episodes:
+        type: "array"
+        items:
+          type: "integer"
+      posters:
+        type: "array"
+        items:
+          $ref: "#/definitions/poster"
+    xml:
+      name: "serie"
+    example:
+      titre: "friends"
+      categories:
+      - "humour"
+      - "sitt-com"
+      episodes:
+      - 0
+      - 1
+      country: "france"
+  episode:
+    type: "object"
+    required:
+    - "duree"
+    - "number"
+    - "url"
+    properties:
+      number:
+        type: "integer"
+      url:
+        type: "string"
+      serie:
+        type: "string"
+      duree:
+        type: "integer"
+    xml:
+      name: "episode"
+    example:
+      number: "Dicator"
+      url: "https://friends01.fr"
+      serie: "friends"
+      duree: 0
+  poster:
+    type: "object"
+    required:
+    - "name"
+    - "url"
+    properties:
+      name:
+        type: "string"
+      url:
+        type: "string"
+      time:
+        type: "string"
+        enum:
+        - "day"
+        - "night"
+    xml:
+      name: "episode"
+    example:
+      name: "poster"
+      url: "https://poster.fr"
+  user:
+    type: "object"
+    required:
+    - "admin"
+    - "name"
+    - "password"
+    properties:
+      name:
+        type: "string"
+      password:
+        type: "string"
+      country:
+        type: "string"
+      admin:
+        type: "boolean"
+      actif:
+        type: "boolean"
+    xml:
+      name: "user"
+    example:
+      name: "maxence"
+      password: "password123"
+      admin: true
+      actif: true

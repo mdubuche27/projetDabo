@@ -1,0 +1,269 @@
+---
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "NetflixPoster"
+host: "virtserver.swaggerhub.com"
+basePath: "/mdubuche27/NetflixPoster/1.0.0"
+schemes:
+- "https"
+paths:
+  /movies:
+    get:
+      summary: "Returns movies"
+      operationId: "getMovies"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/movie"
+        "404":
+          description: "movies not found"
+      x-swagger-router-controller: "Default"
+  /movie/poster/{movieId}:
+    get:
+      summary: "Returns poster from a movie"
+      operationId: "getMoviesPoster"
+      parameters:
+      - name: "movieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/movie"
+        "404":
+          description: "movies not found"
+      x-swagger-router-controller: "Default"
+  /series:
+    get:
+      summary: "Returns series"
+      operationId: "getSeries"
+      parameters: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/serie"
+        "404":
+          description: "series not found"
+      x-swagger-router-controller: "Default"
+  /serie/poster/{serieId}:
+    get:
+      summary: "Returns poster from a serie"
+      operationId: "getSeriesPosters"
+      parameters:
+      - name: "serieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/serie"
+        "404":
+          description: "series not found"
+      x-swagger-router-controller: "Default"
+  /movie/addposter/{movieId}:
+    post:
+      summary: "add a poster to a movie"
+      operationId: "addPosterMovie"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/poster"
+      - name: "movieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "movies not found"
+      x-swagger-router-controller: "Default"
+  /serie/addposter/{serieId}:
+    post:
+      summary: "add a poster to a serie"
+      operationId: "addPosterSerie"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/poster"
+      - name: "serieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "movies not found"
+      x-swagger-router-controller: "Default"
+  /movie/removeposter/{movieId}:
+    post:
+      summary: "remove a poster to a movie"
+      operationId: "removePosterMovie"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/poster"
+      - name: "movieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "movies not found"
+      x-swagger-router-controller: "Default"
+  /serie/removeposter/{serieId}:
+    post:
+      summary: "remove a poster to a serie"
+      operationId: "removePosterSerie"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/poster"
+      - name: "serieId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "movies not found"
+      x-swagger-router-controller: "Default"
+definitions:
+  movie:
+    type: "object"
+    required:
+    - "country"
+    - "duree"
+    - "titre"
+    - "url"
+    properties:
+      titre:
+        type: "string"
+      url:
+        type: "string"
+      categories:
+        type: "array"
+        items:
+          type: "string"
+      duree:
+        type: "integer"
+      country:
+        type: "string"
+      posters:
+        type: "array"
+        items:
+          $ref: "#/definitions/poster"
+    xml:
+      name: "movie"
+    example:
+      titre: "Dicator"
+      url: "https://dictator.fr"
+      categories:
+      - "humour"
+      - "politique"
+      duree: 0
+      country: "france"
+  serie:
+    type: "object"
+    required:
+    - "country"
+    - "titre"
+    properties:
+      titre:
+        type: "string"
+      country:
+        type: "string"
+      categories:
+        type: "array"
+        items:
+          type: "string"
+      episodes:
+        type: "array"
+        items:
+          type: "integer"
+      posters:
+        type: "array"
+        items:
+          $ref: "#/definitions/poster"
+    xml:
+      name: "serie"
+    example:
+      titre: "friends"
+      categories:
+      - "humour"
+      - "sitt-com"
+      episodes:
+      - 0
+      - 1
+      country: "france"
+  episode:
+    type: "object"
+    required:
+    - "duree"
+    - "number"
+    - "url"
+    properties:
+      number:
+        type: "integer"
+      url:
+        type: "string"
+      serie:
+        type: "string"
+      duree:
+        type: "integer"
+    xml:
+      name: "episode"
+    example:
+      number: "Dicator"
+      url: "https://friends01.fr"
+      serie: "friends"
+      duree: 0
+  poster:
+    type: "object"
+    required:
+    - "name"
+    - "url"
+    properties:
+      name:
+        type: "string"
+      url:
+        type: "string"
+      time:
+        type: "string"
+        enum:
+        - "day"
+        - "night"
+    xml:
+      name: "episode"
+    example:
+      name: "poster"
+      url: "https://poster.fr"
